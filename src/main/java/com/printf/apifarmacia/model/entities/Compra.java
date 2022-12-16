@@ -26,12 +26,12 @@ public class Compra {
 
     }
 
-    public Compra(long id, LocalDate dataCompra, Double totalCompra, long cliente, long medicamento) {
+    public Compra(long id, LocalDate dataCompra, Double totalCompra, long idCliente, long idMedicamento) {
         this.id = id;
         this.dataCompra = dataCompra;
         this.totalCompra = totalCompra;
-        this.idCliente = cliente;
-        this.idMedicamento = medicamento;
+        this.idCliente = idCliente;
+        this.idMedicamento = idMedicamento;
     }
 
     public long getId() {
@@ -56,5 +56,21 @@ public class Compra {
 
     public void setTotalCompra(Double totalCompra) {
         this.totalCompra = totalCompra;
+    }
+
+    public long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public long getIdMedicamento() {
+        return idMedicamento;
+    }
+
+    public void setIdMedicamento(long idMedicamento) {
+        this.idMedicamento = idMedicamento;
     }
 }
