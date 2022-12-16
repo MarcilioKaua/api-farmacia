@@ -1,17 +1,15 @@
 package com.printf.apifarmacia.controller;
 
-import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
+import com.printf.apifarmacia.controller.relatorios.RelatorioClientes;
 import com.printf.apifarmacia.model.entities.Cliente;
 import com.printf.apifarmacia.model.repositories.ClienteRespository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +44,19 @@ public class ClienteController {
     public ResponseEntity<Void> deletarCliente(@PathVariable Long id){
         clienteRespository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/clientes/exportar")
+    public void exportarPDF(HttpServletResponse resposta) throws DocumentException, IOException {
+        resposta.setContentType("application/pdf");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=clientes.pdf";
+
+        resposta.setHeader(headerKey, headerValue);
+
+        List<Cliente> listaCliente = clienteRespository.findAll();
+
+        RelatorioClientes exporter = new RelatorioClientes(listaCliente);
+        exporter.export(resposta);
     }
 }
